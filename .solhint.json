@@ -1,0 +1,6 @@
+{
+    "solidity.linter": "solium",
+    "solidity.soliumRules": {
+        "indentation": ["error", 4]
+    }
+}
