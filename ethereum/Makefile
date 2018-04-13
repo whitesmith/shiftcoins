@@ -24,7 +24,9 @@ create-account:
 	docker exec -it ethereum_eth_1 geth --exec "personal.newAccount('password')" attach /root/.ethereum/devchain/geth.ipc
 
 unlock-account:
-	docker exec -it ethereum_eth_1 geth --exec "personal.unlockAccount(web3.eth.accounts[0], 'password')" attach /root/.ethereum/devchain/geth.ipc
+	docker exec -it ethereum_eth_1 geth --exec "personal.unlockAccount(web3.eth.accounts[0], 'password')" attach /root/.ethereum/devchain/geth.ipc && \
+	docker exec -it bootstrap geth --exec "personal.unlockAccount(web3.eth.accounts[0], 'password')" attach /root/.ethereum/devchain/geth.ipc
+	
 
 start-mining:
 	docker exec -it ethereum_eth_1 geth --exec "miner.start()" attach /root/.ethereum/devchain/geth.ipc
