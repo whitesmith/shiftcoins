@@ -5,7 +5,7 @@ compile:
 	truffle compile
 
 deploy:
-	truffle migrate
+	truffle migrate --reset
 
 start-server:
 	npm run dev
