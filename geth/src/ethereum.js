@@ -101,12 +101,8 @@ function getBalance(address) {
   We probably wont use this.
  */
 function getEtherBalance(address) {
-  return web3.eth.getBalance(address, function (error, result) {
-    if (error) {
-      return Promise.reject(error)
-    } else {
+  return web3.eth.getBalance(address).then(result => {
       return web3.utils.fromWei(result, 'ether');
-    }
   });
 }
 
