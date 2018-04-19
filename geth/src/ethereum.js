@@ -1,6 +1,5 @@
-const Web3 = require('web3');
-const config = require('./config.js');
-
+import Web3 from 'web3'
+import config from './config'
 /* connect through IPC instead of http */
 //const net = require('net');
 //const web3 = new Web3(config.network.ipc, net);
@@ -104,10 +103,9 @@ function getBalance(address) {
 function getEtherBalance(address) {
   return web3.eth.getBalance(address, function (error, result) {
     if (error) {
-      console.log(error);
-      throw 'failed_to_get_ether_balance';
+      return Promise.reject(error)
     } else {
-      console.log(web3.utils.fromWei(result, 'ether'));
+      return web3.utils.fromWei(result, 'ether');
     }
   });
 }
@@ -117,7 +115,7 @@ function getEtherBalance(address) {
   The username should be translated to the users wallet address using the getAddress function.
  */
 function transfer(from_address, to_address, value) {
-  return web3.eth.personal.unlockAccount(from_address, password).then(function(success){
+  return web3.eth.personal.unlockAccount(from_address, password).then(function(success) {
     if (success) {
       console.log("Unlocked account");
     } else {
@@ -125,7 +123,7 @@ function transfer(from_address, to_address, value) {
       throw 'failed_to_unlock_account';
     }
     return success
-  }).then(function(success){
+  }).then(function(success) {
     ShiftCoin.methods.transfer(to_address, value).send({ from: from_address, gas: 900000  }).on("receipt", function(receipt) {
       if (receipt.status) {
         console.log("OK");
@@ -157,3 +155,5 @@ function watchTransfers(address) {
     return e;
   })
 }
+
+export {transfer, getAddress, register, getEtherBalance}

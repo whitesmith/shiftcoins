@@ -1,5 +1,6 @@
 {
   "scripts": {
+    "start": "babel-node src/server.js",
     "test": "jest"
   },
   "dependencies": {
