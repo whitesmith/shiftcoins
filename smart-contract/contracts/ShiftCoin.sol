@@ -17,12 +17,14 @@ contract ShiftCoin is StandardToken, Ownable {
         balances[msg.sender] = INITIAL_SUPPLY;
     }
 
+    function addEth () public payable {}
+
     function register(address new_address, string username, string user_id) public onlyOwner {
         require(players[user_id] == false);
-        players[user_id] = true;
-        player_map[username] = new_address;
+        require(new_address.send(1 ether));
         balances[new_address] = 1;
-        new_address.send(1 ether);
+        player_map[username] = new_address;
+        players[user_id] = true;
     }
 
     function addressOf(string _player) public view returns (address _address) {
@@ -32,6 +34,4 @@ contract ShiftCoin is StandardToken, Ownable {
     function registered(string _player) public view returns (bool) {
         return players[_player];
     }
-
-    function addEth () public payable {}
 }
