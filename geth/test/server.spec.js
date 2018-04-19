@@ -1,5 +1,5 @@
-const request = require('supertest');
-const app = require('../src/app')
+import request from 'supertest'
+import app, {COMMAND} from '../src/app'
 
 //reference from slack docs
 let slackExample = {
@@ -30,19 +30,33 @@ describe('Test the root path', () => {
         expect(response.text).toBe("command must be present");
 
     });
-    test('help command should return help text', async () => {
-        const response = await request(app).post('/').type('form').send({token: "abc", command: "/help"});
+    test('Should only accept the default command', async () => {
+        const response = await request(app).post('/').type('form').send({token: "abc", command: COMMAND, text: 'help'});
         expect(response.statusCode).toBe(200);
-        expect(response.text).toBe("/help");
     });
-    test('wallet command should return wallet', async () => {
-        const response = await request(app).post('/').type('form').send({token: "abc", command: "/wallet"});
+    test('help operation should return help text', async () => {
+        const response = await request(app).post('/').type('form').send({token: "abc", command: COMMAND, text: 'help'});
         expect(response.statusCode).toBe(200);
-        expect(response.text).toBe("/wallet");
+        expect(response.text).toBe("help");
     });
-    test('undefined command should be unprocessable', async () => {
-        const response = await request(app).post('/').type('form').send({token: "abc", command: "/foo"});
+    test('balance operation should return balance', async () => {
+        const response = await request(app).post('/').type('form').send({token: "abc", command: COMMAND, text: 'balance'});
+        expect(response.statusCode).toBe(200);
+        expect(response.text).toBe("balance");
+    });
+    test('transfer operation should return transfer', async () => {
+        const response = await request(app).post('/').type('form').send({token: "abc", command: COMMAND, text: 'transfer'});
+        expect(response.statusCode).toBe(200);
+        expect(response.text).toBe("transfer");
+    });
+    test('export operation should return export', async () => {
+        const response = await request(app).post('/').type('form').send({token: "abc", command: COMMAND, text: 'export'});
+        expect(response.statusCode).toBe(200);
+        expect(response.text).toBe("export");
+    });
+    test('undefined operation should be unprocessable', async () => {
+        const response = await request(app).post('/').type('form').send({token: "abc", command: COMMAND, text: 'foo'});
         expect(response.statusCode).toBe(422);
-        expect(response.text).toBe('command "/foo" not found');
+        expect(response.text).toBe('operation "foo" not found');
     });
 })
