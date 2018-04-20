@@ -3,3 +3,4 @@ password/
 node_modules/
 build/
 
+.idea

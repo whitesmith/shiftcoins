@@ -1,0 +1,35 @@
+# Save account address to variables
+account0 = web3.eth.accounts[0]
+account1 = web3.eth.accounts[1]
+
+# Get the deployed contract instance
+ShiftCoin.deployed().then(inst => { ShiftCoinInstance = inst })
+
+# Send ether to contract
+ShiftCoinInstance.addEth.sendTransaction({from: account0, to: ShiftCoinInstance.address, value: web3.toWei(10, 'ether')});
+
+# Get contract balance
+web3.fromWei(web3.eth.getBalance(ShiftCoinInstance.address), "ether")
+
+# Register users
+ShiftCoinInstance.register(account0, "owner", "1")
+ShiftCoinInstance.register(account1, "pmdcosta", "2")
+
+# Check if users were correctly registered
+ShiftCoinInstance.addressOf("owner")
+ShiftCoinInstance.registered("1")
+
+ShiftCoinInstance.addressOf("pmdcosta")
+ShiftCoinInstance.registered("2")
+
+web3.fromWei(web3.eth.getBalance(account0), "ether")
+web3.fromWei(web3.eth.getBalance(account1), "ether")
+
+ShiftCoinInstance.balanceOf(account0)
+ShiftCoinInstance.balanceOf(account1)
+
+# Transfer a shiftcoin to another account
+ShiftCoinInstance.transfer(account1, 1, {from: account0})
+
+# Watch transfer events
+ShiftCoinInstance.Transfer().watch ( (err, response) => console.log(response.args))
