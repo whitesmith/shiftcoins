@@ -8,9 +8,8 @@ miner.start()
 
 //  truffle console
 ShiftCoin.deployed().then(inst => { ShiftCoinInstance = inst })
-ShiftCoinInstance.addEth.sendTransaction({from: web3.eth.accounts[0], to: ShiftCoinInstance.address, value: web3.toWei(100, 'ether')});
+ShiftCoinInstance.addEth.sendTransaction({from: web3.eth.accounts[0], to: ShiftCoinInstance.address, value: web3.toWei(10, 'ether')});
 web3.fromWei(web3.eth.getBalance(ShiftCoinInstance.address), "ether");
-
 
 
 /*

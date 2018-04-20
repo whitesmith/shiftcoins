@@ -4,6 +4,9 @@ install:
 compile:
 	truffle compile
 
+start-dev:
+	ganache-cli -p 7545
+
 deploy-dev:
 	truffle migrate --reset --network development
 
