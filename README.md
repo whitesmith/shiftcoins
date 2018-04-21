@@ -1,4 +1,4 @@
-# ShiftCoin
+# ShiftCoin Prototype
 
 ## Overview
 This project is a blockchain backed prototype of ShiftCoins for the [ShiftAppens2018](https://shiftappens.com/) event. It allows you to deploy a private blockchain node, an ERC20 token smart-contract and a NodeJS server that receives commands from Slack and allows you to trade the ShiftCoin currency between users.
